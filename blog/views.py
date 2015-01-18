@@ -3,11 +3,6 @@ from flask import render_template
 from blog import app
 from database import session
 from models import Post
-from werkzeug.contrib.fixers import LighttpdCGIRootFix
-app.wsgi_app = LighttpdCGIRootFix(app.wsgi_app)
-from werkzeug import Request
-
-
 
 @app.route("/")
 @app.route("/page/<int:page>")
