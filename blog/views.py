@@ -3,6 +3,25 @@ from flask import render_template
 from blog import app
 from database import session
 from models import Post
+from werkzeug.contrib.fixers import LighttpdCGIRootFix
+app.wsgi_app = LighttpdCGIRootFix(app.wsgi_app)
+from werkzeug import Request
+
+class MethodRewriteMiddleware(object):
+    def __init__(self, app, input_name='_method'):
+        self.app = app
+        self.input_name = input_name
+
+    def __call__(self, environ, start_response):
+        request = Request(environ)
+
+        if self.input_name in request.form:
+            method = request.form[self.input_name].upper()
+
+            if method in ['GET', 'POST', 'PUT', 'DELETE']:
+                environ['REQUEST_METHOD'] = method
+
+        return self.app(environ, start_response)
 
 @app.route("/")
 @app.route("/page/<int:page>")
@@ -56,3 +75,28 @@ def single_post(id):
     else:
         return render_template("not_exist.html")
     return render_template("one_post.html",  id=id, post=post)
+
+@app.route("/post/<id>/edit", methods=["GET"])
+def edit_post_get(id):
+    post = session.query(Post).get(id)
+    return render_template("edit_post.html",id=id, post=post)
+
+@app.route("/post/<id>/edit", methods=["POST"])
+def edit_post_post(id):
+    post = session.query(Post).get(id)
+    post.content = Post(
+        title=request.form["title"],
+        content=mistune.markdown(request.form["content"])
+    )
+    session.commit()
+    return redirect(url_for("posts"))
+
+@app.route("/post/<id>/delete", methods=["DELETE"])
+def delete_post(id):
+    post = session.query(Post).get(id)
+    r = requests.delete()
+    session.delete(post)
+    session.commit()
+    return redirect(url_for("posts"))
+    
+    
