@@ -3,6 +3,8 @@ from flask import render_template
 from blog import app
 from database import session
 from models import Post
+from werkzeug.contrib.fixers import LighttpdCGIRootFix
+app.wsgi_app = LighttpdCGIRootFix(app.wsgi_app)
 
 @app.route("/")
 @app.route("/page/<int:page>")
@@ -65,17 +67,19 @@ def edit_post_get(id):
 @app.route("/post/<id>/edit", methods=["POST"])
 def edit_post_post(id):
     post = session.query(Post).get(id)
-    post.content = Post(
-        title=request.form["title"],
-        content=mistune.markdown(request.form["content"])
-    )
+    post.title =  request.form["title"]
+    post.content = mistune.markdown(request.form["content"])   
     session.commit()
     return redirect(url_for("posts"))
 
-@app.route("/post/<id>/delete", methods=["DELETE"])
-def delete_post(id):
+@app.route("/post/<id>/delete", methods=["GET"])
+def delete_post_get(id):
     post = session.query(Post).get(id)
-    r = requests.delete()
+    return render_template("delete_post.html", id=id, post=post)
+
+@app.route("/post/<id>/delete", methods=["POST"])
+def delete_post_delete(id):
+    post = session.query(Post).get(id)
     session.delete(post)
     session.commit()
     return redirect(url_for("posts"))

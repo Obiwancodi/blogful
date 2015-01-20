@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="?__METHOD_OVERRIDE__=DELETE" method="POST">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" name="title" placeholder= "{{post.title}}">
+    </div>
+    <div class="form-group">
+        <label for="content">Content</label>
+        <textarea class="form-control" id="content" name="content" placeholder="{{post.content}}" rows="20"></textarea>
+    </div>
+    <button type="submit" class="btn btn-default">Are you sure you want to delete?</button>
+</form>
+{% endblock %}
