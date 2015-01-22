@@ -52,12 +52,15 @@ def add_post_post():
 
 @app.route("/post/<id>")
 def single_post(id):
-    post = session.query(Post).get(id)
-    if session.query(Post).get(id):
-        return render_template("one_post.html",  id=id, post=post)
-    else:
+    try:
+        post = session.query(Post).get(id)
+        if post:
+            return render_template("one_post.html",  id=id, post=post)
+        else:
+            return render_template("not_exist.html")
+    except:
         return render_template("not_exist.html")
-    return render_template("one_post.html",  id=id, post=post)
+   
 
 @app.route("/post/<id>/edit", methods=["GET"])
 def edit_post_get(id):
