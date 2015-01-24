@@ -11,3 +11,4 @@ app.wsgi_app = LighttpdCGIRootFix(app.wsgi_app)
 
 import views
 import filters
+import login

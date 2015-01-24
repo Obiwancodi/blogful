@@ -38,9 +38,23 @@
                 </div>
             </div>
         </div>
-
+        <h1>
+            <a href="{{ url_for('login_get') }}">Login</a>
+        </h1>
+        <h2>
+            <a href="{{ url_for('add_post_get') }}">Add Post</a>
+        </h2>
         <div class="container">
             {% block content %}{% endblock %}
         </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
     </body>
 </html>

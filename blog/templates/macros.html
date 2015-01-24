@@ -12,6 +12,7 @@
             <a href="{{ url_for('single_post', id=post.id)}}">{{ post.title }} </a>
         </h1>
         {{ post.content | safe }}
+        {{ post.author.name }}
     </div>
 </div>
 {% endmacro %}
