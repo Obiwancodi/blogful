@@ -73,7 +73,7 @@ def single_post(id):
 @login_required
 def edit_post_get(id):
     post = session.query(Post).get(id)
-    if post.author_id == current_user.id :
+    if post.author_id == current_user.id:
         return render_template("edit_post.html",id=id, post=post)
     else:
         return render_template("wrong_login.html", id=id, post=post)
