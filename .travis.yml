@@ -3,10 +3,10 @@ python:
     - "2.7"
     
 env:
-   - DATABASE_URL="postgresql://postgres:@localhost/blogful-test" TEST_DATABASE_URL="postgresql://postgres:@localhost/blogful-test" SECRET_KEY="1234567890"
+   - DATABASE_URL="postgresql://postgres:@localhost/blogful_test" TEST_DATABASE_URL="postgresql://postgres:@localhost/blogful_test" SECRET_KEY="1234567890"
 install: pip install -r requirements.txt
 before_script:
-  - psql -c 'create database blogful-test;' -U postgres
+  - psql -c 'create database blogful_test;' -U postgres
 script:
     - PYTHONPATH=. python tests/test_filters.py
     - PYTHONPATH=. python tests/test_views_integration.py
