@@ -10,4 +10,5 @@ before_script:
 script:
     - PYTHONPATH=. python tests/test_filters.py
     - PYTHONPATH=. python tests/test_views_integration.py
+    - PYTHONPATH=. python tests/test_views_acceptance.py
    

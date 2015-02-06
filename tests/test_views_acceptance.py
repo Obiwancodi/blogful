@@ -18,7 +18,7 @@ class TestViews(unittest.TestCase):
     def setUp(self):
         """ Test setup """
         self.browser = Browser("phantomjs")
-
+        
         # Set up the tables in the database
         Base.metadata.create_all(engine)
 
@@ -41,21 +41,22 @@ class TestViews(unittest.TestCase):
         Base.metadata.drop_all(engine)
         self.browser.quit()
         
+        
     def testLoginCorrect(self):
-        self.browser.visit("http://0.0.0.0:8080/login")
+        self.browser.visit("http://0.0.0.0:5000/login")
         self.browser.fill("email", "alice@example.com")
         self.browser.fill("password", "test")
         button = self.browser.find_by_css("button[type=submit]")
         button.click()
-        self.assertEqual(self.browser.url, "http://0.0.0.0:8080/login")
+        self.assertEqual(self.browser.url, "http://0.0.0.0:5000/")
 
     def testLoginIncorrect(self):
-        self.browser.visit("http://0.0.0.0:8080/login")
+        self.browser.visit("http://0.0.0.0:5000/login")
         self.browser.fill("email", "bob@example.com")
         self.browser.fill("password", "test")
         button = self.browser.find_by_css("button[type=submit]")
         button.click()
-        self.assertEqual(self.browser.url, "http://0.0.0.0:8080/login")
+        self.assertEqual(self.browser.url, "http://0.0.0.0:5000/login")
 
 if __name__ == "__main__":
     unittest.main()
