@@ -14,7 +14,14 @@ from blog import app
 from blog import models
 from blog.database import Base, engine, session
 
+from celery.signals import task_prerun
+
+
 class TestViews(unittest.TestCase):
+    @task_prerun.connect
+    def on_task_init(*args, **kwargs):
+        engine.dispose()
+        
     def setUp(self):
         """ Test setup """
         self.browser = Browser("phantomjs")
