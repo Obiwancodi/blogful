@@ -40,7 +40,6 @@ class TestViews(unittest.TestCase):
 
     def tearDown(self):
         """ Test teardown """
-        session.remove()
         # Remove the tables and their data from the database
         self.process.terminate()
         session.close()
