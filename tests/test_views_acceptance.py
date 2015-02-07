@@ -18,9 +18,13 @@ from blog.database import Base, engine, session
 
 
 class TestViews(unittest.TestCase):
+    @app.teardown_appcontext
+    def shutdown_session(exception=None):
+        db_session.remove()
         
     def setUp(self):
         """ Test setup """
+        
         self.browser = Browser("phantomjs")
         
         # Set up the tables in the database
