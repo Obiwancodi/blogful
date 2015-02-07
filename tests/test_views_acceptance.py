@@ -21,9 +21,6 @@ class TestViews(unittest.TestCase):
         
     def setUp(self):
         """ Test setup """
-        @app.teardown_appcontext
-        def shutdown_session():
-            db_session.remove()
         
         self.browser = Browser("phantomjs")
         
@@ -43,6 +40,9 @@ class TestViews(unittest.TestCase):
 
     def tearDown(self):
         """ Test teardown """
+        @app.teardown_appcontext
+        def shutdown_session():
+            db_session.remove()
         # Remove the tables and their data from the database
         self.process.terminate()
         session.close()
