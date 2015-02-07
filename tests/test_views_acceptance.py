@@ -18,9 +18,6 @@ from blog.database import Base, engine, session
 
 
 class TestViews(unittest.TestCase):
-    @task_prerun.connect
-    def on_task_init(*args, **kwargs):
-        engine.dispose()
         
     def setUp(self):
         """ Test setup """
