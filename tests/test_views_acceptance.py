@@ -22,7 +22,7 @@ class TestViews(unittest.TestCase):
     def setUp(self):
         """ Test setup """
         @app.teardown_appcontext
-        def shutdown_ session(exception=None):
+        def shutdown_session():
             db_session.remove()
         
         self.browser = Browser("phantomjs")
