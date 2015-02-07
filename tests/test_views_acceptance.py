@@ -14,7 +14,7 @@ from blog import app
 from blog import models
 from blog.database import Base, engine, session
 
-from celery.signals import task_prerun
+
 
 
 class TestViews(unittest.TestCase):
