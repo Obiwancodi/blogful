@@ -23,9 +23,10 @@ class TestViews(unittest.TestCase):
         """ Test setup """
         
         self.browser = Browser("phantomjs")
-        
+        from multiprocessing.util import register_after_fork
         # Set up the tables in the database
         Base.metadata.create_all(engine)
+        register_after_fork(engine, engine.dispose)
 
         # Create an example user
         self.user = models.User(name="Alice", email="alice@example.com",
