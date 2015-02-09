@@ -44,6 +44,7 @@ class TestViews(unittest.TestCase):
         # Remove the tables and their data from the database
         register_after_fork(engine, engine.dispose)
         self.process.terminate()
+        engine.dispose() 
         session.close()
         Base.metadata.drop_all(engine)
         self.browser.quit()
